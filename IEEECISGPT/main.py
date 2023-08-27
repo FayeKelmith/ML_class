@@ -11,7 +11,7 @@ from langchain.llms import OpenAI
 import streamlit as st 
 
 st.title('IEEECIS-GPT')
-llm = OpenAI(temperature=0.9,openai_api_key = os.getenv('api_key'))
+llm = OpenAI(temperature=0.9,openai_api_key = os.getenv("api_key"))
 
 
 
