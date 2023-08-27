@@ -1,10 +1,17 @@
-import key
+from dotenv import load_dotenv
+import os
+
+
+def configure():
+    load_dotenv()
+    
+configure()
+
 from langchain.llms import OpenAI 
 import streamlit as st 
 
 st.title('IEEECIS-GPT')
-
-llm = OpenAI(temperature=0.9,openai_api_key = key.OPENAI_KEY)
+llm = OpenAI(temperature=0.9,openai_api_key = os.getenv('api_key'))
 
 
 
