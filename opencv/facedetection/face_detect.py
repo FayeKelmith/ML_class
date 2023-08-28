@@ -5,6 +5,7 @@ import cv2 as opcv
 import resize
 
 st.title("Face Detection using HaarCascaade: Simple App")
+st.header("You can upload a picture or Take one using your Camera")
 st.write("Please upload a picture below:")
 pic = st.file_uploader("Upload a pic")
 
@@ -29,7 +30,6 @@ if pic is not None:
             opcv.rectangle(img, (x, y), (x+w, y+h), (0, 255, 0), thickness=2)
 
     st.image(img, channels="RGB")
-    st.snow()
     st.warning(
         "This algorithm is NOT very smart and will get confused in many pictures. Will upload BETTER algorithms.")
 
@@ -50,7 +50,6 @@ elif picture:
             opcv.rectangle(img, (x, y), (x+w, y+h), (0, 255, 0), thickness=2)
 
     st.image(img, channels="RGB")
-    st.snow()
     st.warning(
         "This algorithm is NOT very smart and will get confused in many pictures. Will upload BETTER algorithms.")
 # print(f'Number of faces found is: {len(faces_rect)}')
