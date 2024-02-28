@@ -1,4 +1,6 @@
 import pandas as pd 
+import seaborn as sns
+import matplotlib.pyplot as plt
 import streamlit as st 
 
 
@@ -48,6 +50,7 @@ with eda:
     
     st.header("Experimental")
     
+    st.bar_chart(room_occupancy["Room_Occupancy_Count"])
  
     
 with model:
