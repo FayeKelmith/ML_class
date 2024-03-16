@@ -127,6 +127,19 @@ with eda:
     
     st.divider()
     
+    st.subheader("Before we close this chapter, how does the date relate to the number of people in the room?")
+    
+    count_per_day = room_occupancy.groupby("Date")["Room_Occupancy_Count"].sum()
+    count_per_jour = room_occupancy["Date"].value_counts()
+    
+    fig6, ax6 = plt.subplots()
+    sns.barplot(x=count_per_jour.index,y=count_per_jour.values,ax=ax6)
+    ax6.set_xticklabels(ax6.get_xticklabels(), rotation=-45)
+    st.pyplot(fig6)
+    
+    st.info("Sans Commentaire! 🤐")
+    
+    
     st.header("Ait! we're done here! 🥂")
     
     
