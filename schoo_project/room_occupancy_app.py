@@ -2,8 +2,11 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 import streamlit as st 
+import pickle
+import numpy as np
+import datetime
 
-
+linear_reg_model_filename = "regression_model.pickle"
 
 room_occupancy = pd.read_csv("./dataset/occupancy_est.csv")
 # data = pd.DataFrame(room_occupancy)
@@ -55,6 +58,16 @@ with eda:
     st.header("Data Visualization")
     
     st.title("Let's visualize the distribution of our data")
+    
+    st.divider()
+    
+    st.subheader("HeatMap")
+
+    figure, axes = plt.subplots()
+    
+    sns.heatmap(room_occupancy[room_occupancy.select_dtypes(include=np.number).columns].corr(),ax=axes)
+    
+    st.write(figure)
     
     st.divider()
     
@@ -145,4 +158,45 @@ with eda:
     
     
 with model:
-    st.write("Let's test our model")
+    st.header("Linear Regression Model without K-Fold Cross validation")
+    
+    model = pickle.load(open(linear_reg_model_filename,"rb"))
+    
+    st.info("We have so many variables to take into account. So, to make the model more user friendly, we will maintain defualt values for less determining features of the model and request the most determining ones from the user. ")
+    
+    st.subheader("We have the following columns in our dataset.")
+    
+    data_types = room_occupancy.dtypes
+    st.table(data_types)
+    date = st.date_input("What day was it: ",datetime.date.today())
+    t = st.time_input('What time of the day: ', datetime.time(12, 30))
+    
+    
+    temp = st.slider("What says the 🌡 thermometer : ",min_value=23.0, max_value=27.0,step=0.1,value=25.5)
+    
+    lighting = st.slider("Lighting: ",min_value=0, max_value=280,step=20,value=0)
+    
+    sound = st.slider("Sound: ", min_value=0.04,max_value=4.0,step = 0.2,value=0.08)
+    
+    carbon_2_oxide = st.slider("CO2 Levels: ", min_value=300, max_value=1300,step=50,value=360)
+    
+    co2_slope = st.slider("CO2_Slope",min_value=-6.5, max_value=9.0,step=0.5,value=0.0)
+    
+    pir_value = st.radio("PIR reading: ",[0,1])
+    
+    sample = pd.DataFrame()
+    
+    sample["Time"] = t.dt.hour + t.dt.minutes/60
+    
+    # sample["S1_Temp","S2_Temp","S3_Temp","S4_Temp"] = 
+    
+    #BUG: 
+    """
+    - Standardize only training data 
+    - Retrain model with new input 
+    - Compile testing data and test model with it.
+    - Report test results.
+    
+    """
+    
+    
